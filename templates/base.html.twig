@@ -1,12 +1,54 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}
+        <link type="text/css" media="all" href="{{ asset('/assets/fonts/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet"/>
+        <link type="text/css" media="all" href="{{ asset('/assets/boostrap-files/css/bootstrap.min.css') }}" rel="stylesheet"/>
+        <!-- Animate CSS -->
+        <link rel="stylesheet" href="{{ asset('/assets/css/owl.carousel.css') }}">
+        <link rel="stylesheet" href="{{ asset('/assets/css/slider.css') }}">
+        <!-- Animate CSS -->
+        <link type="text/css" media="all" href="{{ asset('/assets/css/animate.css') }}" rel="stylesheet"/>
+        <!-- Template CSS -->
+        <link rel="stylesheet" type="text/css" href="{{ asset('/assets/css/component.css') }}"/>
+        <link type="text/css" media="all" href="{{ asset('/assets/css/contact.form.css') }}" rel="stylesheet"/>
+        <link type="text/css" media="all" href="{{ asset('/assets/css/style.css') }}" rel="stylesheet"/>
+        <!-- Switcher CSS -->
+        <link type="text/css" media="all" href="{{ asset('/assets/css/switcher.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('/assets/css/colour-scheme/color-blue.css') }}" rel="stylesheet" type="text/css" data-color="color-blue"
+              media="all" id="stylesheet-new">
+        <!-- Responsive CSS -->
+        <link type="text/css" media="all" href="{{ asset('/assets/css/respons.css') }}" rel="stylesheet"/>
+        <!-- Style Switcher -->
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('/assets/img/favicons/apple-touch-icon-144x144.png') }}"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('/assets/img/favicons/apple-touch-icon-114x114.png') }}"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('/assets/img/favicons/apple-touch-icon-72x72.png') }}"/>
+        <link rel="apple-touch-icon" href="{{ asset('/assets/img/favicons/apple-touch-icon.png') }}"/>
+        <link rel="shortcut icon" href="{{ asset('/assets/img/favicons/favicon.png') }}"/>
+        <!-- Google Fonts -->
+        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,100italic,200,200italic,300,300italic,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic'
+              rel='stylesheet' type='text/css'>
+    {% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('/assets/js/jquery-1.11.2.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/boostrap-files/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/jquery.appear.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/jquery.mixitup.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/owl.carousel.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/jquery.flexslider-min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/jquery.inview.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/jquery.knob.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/jquery.cookie.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/jquery.ratyli.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/modernizr.custom.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/contact_scripts.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/assets/js/scripts.js') }}" type="text/javascript"></script>
+{% endblock %}
+</body>
 </html>

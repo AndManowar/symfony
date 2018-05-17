@@ -18,12 +18,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class SiteController extends Controller
 {
     /**
-     * @Route("/site", name="site_main")
+     * @Route("/", name="site_main")
      */
     public function indexAction()
     {
-        echo '<pre>';
-        print_r('test');
-        die();
+        return $this->render('home/index.html.twig');
     }
 }
