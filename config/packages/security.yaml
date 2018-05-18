@@ -1,5 +1,7 @@
 security:
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
     providers:
         in_memory: { memory: ~ }
     firewalls:
@@ -8,17 +10,8 @@ security:
             security: false
         main:
             anonymous: true
-
-            # activate different ways to authenticate
-
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+         - { path: /articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: /article/create, roles: ROLE_USER }
+         - { path: /register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

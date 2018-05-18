@@ -9,10 +9,14 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostForm;
 use App\Repository\PostRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * Class BlogController
@@ -50,14 +54,19 @@ class BlogController extends Controller
      */
     public function create(Request $request)
     {
-        $post = $this->postRepository->getPost();
-        $form = $this->createForm(Post::class, $post);
+        $form = $this->createForm(PostForm::class)->add('Save', SubmitType::class);
 
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->addFlash('notice', 'Пост создан');
+            return $this->redirectToRoute('articles');
+        }
 
         return $this->render('articles/form.html.twig', [
             'statuses' => Post::$statusList,
-            'post'     => $post
+            'form'     => $form->createView()
         ]);
     }
 
