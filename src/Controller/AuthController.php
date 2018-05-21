@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
  * Class AuthController
@@ -39,35 +40,44 @@ class AuthController extends Controller
     /**
      * @Route("/register", name="register")
      * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
+     * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function register(Request $request, UserPasswordEncoderInterface $encoder)
     {
         $form = $this->createForm(RegisterForm::class)->add('Save', SubmitType::class);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->authService->register($form->getData(), $passwordEncoder);
+            $this->authService->authenticateUser(
+                $this->authService->register(
+                    $form->getData(),
+                    $this->getDoctrine()->getManager(),
+                    $encoder
+                ),
+                $this->container
+            );
 
-            $this->addFlash('notice', 'Пост создан');
-            return $this->redirectToRoute('articles');
+            return $this->redirectToRoute('site_main');
         }
 
-
         return $this->render('auth/register.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 
     /**
      * @Route("/login", name="login")
+     * @param AuthenticationUtils $authenticationUtils
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function login()
+    public function login(AuthenticationUtils $authenticationUtils)
     {
-
+        return $this->render('auth/login.html.twig', [
+            'last_username' => $authenticationUtils->getLastUsername(),
+            'error'         => $authenticationUtils->getLastAuthenticationError(),
+        ]);
     }
 
     /**
@@ -75,7 +85,5 @@ class AuthController extends Controller
      */
     public function logout()
     {
-
     }
-
 }

@@ -3,23 +3,11 @@
 {% block body %}
 
     <section class="contact" id="navcontact">
-        <header class="head">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-5 col-lg-5 text-right">
-                        <img class="logo-page" src="{{ asset('/assets/img/contact_l.png') }}" alt="Ukieweb">
-                    </div>
-                    <div class="col-xs-12 col-sm-7 col-lg-7">
-                        <h4 class="sub-title">Get in touch with me</h4>
-                    </div>
-                </div>
-            </div>
-        </header>
         <section class="content padding-block border-bottom">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-lg-12">
-                        <h3 class="title title-contact">Contact form</h3>
+                        <h3 class="title title-contact">Post form</h3>
                         <div class="contact-form">
                             {{ form_start(form) }}
                             {{ form_widget(form) }}
@@ -30,5 +18,4 @@
             </div>
         </section>
     </section>
-
 {% endblock %}

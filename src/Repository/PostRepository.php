@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Post;
+use App\Entity\User;
+use App\Helpers\File;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -35,38 +37,30 @@ class PostRepository extends ServiceEntityRepository
         return $this->findBy(['slug' => $slug]);
     }
 
-    public function create(ObjectManager $objectManager, Post $post)
+    /**
+     * @param ObjectManager $objectManager
+     * @param Post $post
+     * @param User $user
+     */
+    public function create(ObjectManager $objectManager, Post $post, User $user)
     {
+        $post->setUserId($user->getId());
+        $post->setImage(File::uploadFile($post->file));
 
-
-        die();
         $objectManager->persist($post);
         $objectManager->flush();
-
     }
 
 
-
-
-
-
-
-//    /**
-//     * @return Post[] Returns an array of Post objects
-//     */
-    /*
-    public function findByExampleField($value)
+    public function findByQuery()
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
             ->orderBy('p.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Post

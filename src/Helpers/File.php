@@ -8,25 +8,25 @@
 
 namespace App\Helpers;
 
-
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+/**
+ * Class File
+ * @package App\Helpers
+ */
 class File
 {
     /**
-     * @const
+     * Upload file
+     *
+     * @param UploadedFile $file
+     * @return null|string
      */
-    const BLOG_DIRECTORY = 'blog';
-
     public static function uploadFile(UploadedFile $file)
     {
         $filename = $file->getClientOriginalName();
-        echo '<pre>';
-        print_r($file->move('../public/uploads', $file->getClientOriginalName()));
-        die();
-        echo '<pre>';
-        print_r('test');
-        die();
-    }
+        $file->move('../public/uploads', $filename);
 
+        return $filename;
+    }
 }

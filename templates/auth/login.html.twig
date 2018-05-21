@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+    <section class="contact" id="navcontact">
+        <header class="head">
+            <div class="container">
+                <div class="row">
+                    {% if error %}
+                        <div class="text-center"
+                             style="color: red; font-size: 2em">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </header>
+        <section class="content padding-block border-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <h3 class="title title-contact">Login form</h3>
+                        <div class="contact-form">
+                            <form action="{{ path('login') }}" method="post">
+                                <label for="username">Username:</label>
+                                <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+                                <label for="password">Password:</label>
+                                <input type="password" id="password" name="_password"/>
+                                <button type="submit" class="btn btn-success">login</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+
+{% endblock %}

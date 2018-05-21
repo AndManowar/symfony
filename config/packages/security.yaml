@@ -3,15 +3,24 @@ security:
         App\Entity\User:
             algorithm: bcrypt
     providers:
-        in_memory: { memory: ~ }
+         database_users:
+             entity: { class: App\Entity\User, property: username }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
+            form_login:
+                login_path: login
+                check_path: login
+            logout:
+                path: logout
+                target: site_main
+
     access_control:
          - { path: /articles, roles: IS_AUTHENTICATED_ANONYMOUSLY }
          - { path: /article/create, roles: ROLE_USER }
-         - { path: /register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: /login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: /register, allow_if: "is_anonymous() and !is_authenticated()" }
+         - { path: /login, allow_if: "is_anonymous() and !is_authenticated()" }
+         - { path: /logout, allow_if: "!is_anonymous() and is_authenticated()" }

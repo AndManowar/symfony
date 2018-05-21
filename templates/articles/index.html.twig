@@ -76,105 +76,37 @@
                 <!-- start row -->
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-lg-8 padding-bottom">
-                        <!-- start post -->
-                        <div class="post">
-                            <!-- start photo -->
-                            <div class="photo">
-                                <img src="assets/img/blog/post-1.png" alt="UkieWeb">
-                            </div>
-                            <!-- end photo -->
-                            <!-- start title post -->
-                            <h3 class="title title-blog">Standard Post with Image</h3>
-                            <!-- end title post -->
-                            <div class="entry-byline">
-                                <i class="fa fa-user"></i>
-                                <span class="entry-author right-border">
-                                <a href="#" title="Posts by Theme Admin" rel="author">
-                                    <span>Jonh Doe</span>
-                                </a>
-                            </span>
-                                <i class="fa fa-clock-o"></i>
-                                <time class="entry-published right-border">30/04/2015</time>
-                                <i class="fa fa-comment"></i>
-                                <span class="comments-link">30 Comments</span>
-                            </div>
-                            <!-- start desc post -->
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                mollit anim id est
-                                laborum dolor.</p>
-                            <!-- end desc post -->
-                            <a href="post-img.html" class="btn hover-animate btn-color-hover">Read More</a>
-                        </div>
-                        <!-- end post -->
 
-                        <!-- start post -->
-                        <div class="post">
-                            <!-- start photo -->
-                            <div class="photo">
-                                <img src="assets/img/blog/post-1.png" alt="UkieWeb">
-                            </div>
-                            <!-- end photo -->
-                            <!-- start title post -->
-                            <h3 class="title title-blog">Standard Post with Image</h3>
-                            <!-- end title post -->
-                            <div class="entry-byline">
-                                <i class="fa fa-user"></i>
-                                <span class="entry-author right-border">
+                        {% for post in posts %}
+                            <!-- start post -->
+                            <div class="post">
+                                <!-- start photo -->
+                                <div class="photo">
+                                    <img src="{{ asset('/uploads/'~post.image) }}" alt="UkieWeb">
+                                </div>
+                                <!-- end photo -->
+                                <!-- start title post -->
+                                <h3 class="title title-blog">{{ post.title }}</h3>
+                                <!-- end title post -->
+                                <div class="entry-byline">
+                                    <i class="fa fa-user"></i>
+                                    <span class="entry-author right-border">
                                 <a href="#" title="Posts by Theme Admin" rel="author">
-                                    <span>Jonh Doe</span>
+                                    <span>{{ post.user.name }}</span>
                                 </a>
                             </span>
-                                <i class="fa fa-clock-o"></i>
-                                <time class="entry-published right-border">30/05/2015</time>
-                                <i class="fa fa-comment"></i>
-                                <span class="comments-link">65 Comments</span>
+                                    <i class="fa fa-clock-o"></i>
+                                    <time class="entry-published right-border">{{ post.createdAt|date('d-m-Y H:i') }}</time>
+                                    <i class="fa fa-comment"></i> 
+                                    <span class="comments-link">{{ post.currentStatus }}</span>
+                                </div>
+                                <!-- start desc post -->
+                                <p>{{ post.text }}</p>
+                                <!-- end desc post -->
+                                <a href="post-img.html" class="btn hover-animate btn-color-hover">Read More</a>
                             </div>
-                            <!-- start desc post -->
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                mollit anim id est
-                                laborum dolor.</p>
-                            <!-- end desc post -->
-                            <a href="post-img.html" class="btn hover-animate btn-color-hover">Read More</a>
-                        </div>
-                        <!-- end post -->
-
-                        <!-- start post -->
-                        <div class="post last">
-                            <!-- start video -->
-                            <div class="video">
-                                <iframe src="//player.vimeo.com/video/22439234?title=0&portrait=0&byline=0"
-                                        frameborder="0" allowfullscreen="" replaced="true"></iframe>
-                            </div>
-                            <!-- end video -->
-                            <!-- start title post -->
-                            <h3 class="title title-blog">Standard Post with Video</h3>
-                            <!-- end title post -->
-                            <div class="entry-byline">
-                                <i class="fa fa-user"></i>
-                                <span class="entry-author right-border">
-                                <a href="#" title="Posts by Theme Admin" rel="author">
-                                    <span>Jonh Doe</span>
-                                </a>
-                            </span>
-                                <i class="fa fa-clock-o"></i>
-                                <time class="entry-published right-border">29/05/2015</time>
-                                <i class="fa fa-comment"></i>
-                                <span class="comments-link">5 Comments</span>
-                            </div>
-                            <!-- start desc post -->
-                            <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                                nulla pariatur.
-                                Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                                mollit anim id est
-                                laborum dolor.</p>
-                            <!-- end desc post -->
-                            <a href="#" class="btn hover-animate btn-color-hover">Read More</a>
-                        </div>
-                        <!-- end post -->
+                            <!-- end post -->
+                        {% endfor %}
 
                         <!-- start pagination -->
                         <div class="pagination">
@@ -240,46 +172,6 @@
             <!-- end container -->
         </section>
         <!-- End Blog section -->
-
-        <!-- Start Footer section -->
-        <footer class="footer">
-            <!-- start container -->
-            <div class="container">
-                <!-- start row -->
-                <div class="row">
-                    <!-- start phone number -->
-                    <div class="col-xs-12 col-sm-6 col-lg-3">
-                        <a href="#" class="hover-animate">
-                            <span class="ukie-icons hover-animate"><i class="fa fa-phone"></i></span> +38 012-3456-7890
-                        </a>
-                    </div>
-                    <!-- end phone number -->
-                    <!-- start email -->
-                    <div class="col-xs-12 col-sm-6 col-lg-3">
-                        <a href="#" class="hover-animate">
-                            <span class="ukie-icons hover-animate"><i class="fa fa-paper-plane"></i></span>
-                            info@yourdomain.com
-                        </a>
-                    </div>
-                    <!-- end email -->
-                    <!-- start address -->
-                    <div class="col-xs-12 col-sm-6 col-lg-3">
-                        <a href="#" class="hover-animate">
-                            <span class="ukie-icons hover-animate"><i class="fa fa-map-marker"></i></span> 44 King St,
-                            Melbourne VIC
-                        </a>
-                    </div>
-                    <!-- end address -->
-                    <!-- start Copyright -->
-                    <div class="col-xs-12 col-sm-6 col-lg-3 text-right">
-                        <span class="copyright">Copyright © 2016 All right reserved</span>
-                    </div>
-                    <!-- end Copyright -->
-                </div>
-                <!-- end row -->
-            </div>
-            <!-- end container -->
-        </footer>
         <!-- End Footer section -->
 
     </div>

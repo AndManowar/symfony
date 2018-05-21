@@ -40,13 +40,78 @@
     {% endblock %}
 </head>
 <body>
-{% block body %}
-    {% for message in app.flashes('notice') %}
-        <div class="flash-notice">
-            {{ message }}
-        </div>
-    {% endfor %}
+{% block header %}
+    <div class="animationload">
+        <div class="loader"></div>
+    </div>
+    <div id="wraper">
+        <nav class="menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-lg-12">
+                        <a href="{{ path('article_create') }}" class="menu-li">
+                            <span class="foto">
+                                <img src="{{ asset('/assets/img/menu/resume.png') }}" class="menu-img"
+                                     data-img-name="resume"
+                                     alt="Ukieweb">
+                            </span>
+                            <span class="name">New Post</span>
+                        </a>
+                        <a href="{{ path('articles') }}" class="menu-li">
+                            <span class="foto">
+                                <img src="{{ asset('/assets/img/menu/blog.png') }}" class="menu-img"
+                                     data-img-name="blog"
+                                     alt="Ukieweb">
+                            </span>
+                            <span class="name">Blog</span>
+                        </a>
+                        {% if app.user %}
+                            <a href="{{ path('logout') }}" class="menu-li">
+                                <span class="foto">
+                                <img src="{{ asset('/assets/img/menu/profile.png') }}" class="menu-img"
+                                     data-img-name="profile"
+                                     alt="Ukieweb"/>
+                            </span>
+                                <span class="name">Logout</span>
+                            </a>
+                        {% else %}
+                            <a href="{{ path('register') }}" class="menu-li">
+                                <span class="foto">
+                                <img src="{{ asset('/assets/img/menu/profile.png') }}" class="menu-img"
+                                     data-img-name="profile"
+                                     alt="Ukieweb"/>
+                            </span>
+                                <span class="name">Register</span>
+                            </a>
+                            <a href="{{ path('login') }}" class="menu-li">
+                                <span class="foto">
+                                <img src="{{ asset('/assets/img/menu/profile.png') }}" class="menu-img"
+                                     data-img-name="profile"
+                                     alt="Ukieweb"/>
+                            </span>
+                                <span class="name">Login</span>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <a href="#" class="btn hover-animate scrollToTop"><i class="fa fa-angle-up"></i></a>
 {% endblock %}
+<div id="wraper">
+    <nav class="menu">
+        <div class="container">
+            {% block body %}
+                {% for message in app.flashes %}
+                    <div class="flash-notice">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endblock %}
+        </div>
+    </nav>
+</div>
 {% block javascripts %}
     <script src="{{ asset('/assets/js/jquery-1.11.2.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('/assets/boostrap-files/js/bootstrap.min.js') }}" type="text/javascript"></script>

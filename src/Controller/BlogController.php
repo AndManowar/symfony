@@ -43,7 +43,12 @@ class BlogController extends Controller
      */
     public function articles()
     {
-        return $this->render('articles/index.html.twig');
+        echo '<pre>';
+        print_r($this->postRepository->findByQuery());
+        die();
+        return $this->render('articles/index.html.twig', [
+            'posts' => $this->postRepository->findByQuery()
+        ]);
     }
 
     /**
@@ -55,28 +60,32 @@ class BlogController extends Controller
     public function create(Request $request)
     {
         $form = $this->createForm(PostForm::class)->add('Save', SubmitType::class);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->addFlash('notice', 'Пост создан');
+            $this->postRepository->create(
+                $this->getDoctrine()->getManager(),
+                $form->getData(),
+                $this->getUser()
+            );
+
             return $this->redirectToRoute('articles');
         }
 
         return $this->render('articles/form.html.twig', [
             'statuses' => Post::$statusList,
-            'form'     => $form->createView()
+            'form'     => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/article/update/{id}", name="article_update")
+     * @Route("/article/update/{slug}", name="article_update")
      *
-     * @param integer $id
+     * @param string $slug
      * @param Request $request
      */
-    public function update($id, Request $request)
+    public function update(string $slug, Request $request)
     {
 
     }

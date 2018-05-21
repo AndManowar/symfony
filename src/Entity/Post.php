@@ -4,11 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PostRepository")
+ * @UniqueEntity(fields={"slug", "title"})
+ * @ORM\HasLifecycleCallbacks()
  */
 class Post
 {
@@ -32,7 +33,7 @@ class Post
      */
     public static $statusList = [
         self::STATUS_NEW         => 'Новый',
-        self::STATUS_HOT         => 'Гарячее',
+        self::STATUS_HOT         => 'Горячее',
         self::STATUS_INTERESTING => 'Интересное',
     ];
 
@@ -44,12 +45,12 @@ class Post
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $slug;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $title;
 
@@ -89,14 +90,12 @@ class Post
     public $file;
 
     /**
-     * @param ClassMetadata $metadata
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="posts")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *
+     * @var User
      */
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('title', new NotBlank());
-        $metadata->addPropertyConstraint('text', new NotBlank());
-        $metadata->addPropertyConstraint('status', new NotBlank());
-    }
+    public $user;
 
     /**
      * @return mixed
@@ -237,14 +236,6 @@ class Post
     }
 
     /**
-     * @return \DateTimeInterface|null
-     */
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->created_at;
-    }
-
-    /**
      * @param \DateTimeInterface $updated_at
      * @return Post
      */
@@ -253,6 +244,39 @@ class Post
         $this->updated_at = $updated_at;
 
         return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        if (!$this->getCreatedAt()) {
+            $this->setCreatedAt(new \DateTime());
+        }
+
+        if (!$this->getUpdatedAt()) {
+            $this->setUpdatedAt(new \DateTime());
+        }
+
+        $this->setSlug();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->setUpdatedAt(new \DateTime());
     }
 
     /**

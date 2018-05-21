@@ -77,25 +77,25 @@ $(document).ready(function () {
      */
 
 
-    $(".menu .menu-img").on({
-        mouseenter: function () {
-            var $div = $(this);
-            var img = document.createElement('img');
-            var img_name = $div.attr("data-img-name");
-            img.src = "./assets/img/menu/" + img_name + ".gif?t=" + new Date().getTime();
-
-            $(img).load(function () {
-                $div.attr("src", img.src);
-            });
-        },
-        mouseleave: function () {
-            var $div = $(this);
-            var img_name = $div.attr("data-img-name");
-            var src = "./assets/img/menu/" + img_name + ".png";
-            $div.attr("src", src);
-
-        }
-    });
+    // $(".menu .menu-img").on({
+    //     mouseenter: function () {
+    //         var $div = $(this);
+    //         var img = document.createElement('img');
+    //         var img_name = $div.attr("data-img-name");
+    //         img.src = "./assets/img/menu/" + img_name + ".gif?t=" + new Date().getTime();
+    //
+    //         $(img).load(function () {
+    //             $div.attr("src", img.src);
+    //         });
+    //     },
+    //     mouseleave: function () {
+    //         var $div = $(this);
+    //         var img_name = $div.attr("data-img-name");
+    //         var src = "./assets/img/menu/" + img_name + ".png";
+    //         $div.attr("src", src);
+    //
+    //     }
+    // });
 
 
     /*

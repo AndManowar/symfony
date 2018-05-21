@@ -4,10 +4,13 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="'user'")
+ * @ORM\Table(name="user")
+ * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity(fields={"email", "username"})
  */
 class User implements UserInterface
 {
@@ -19,12 +22,12 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $email;
 
@@ -62,6 +65,11 @@ class User implements UserInterface
      * @var string
      */
     public $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Post", mappedBy="user")
+     */
+    public $posts;
 
     /**
      * User constructor.
@@ -234,8 +242,7 @@ class User implements UserInterface
      * Alternatively, the roles might be stored on a ``roles`` property,
      * and populated in any number of different ways when the user object
      * is created.
-     *
-     * @return (Role|string)[] The user roles
+     * @return array (Role|string)[] The user roles
      */
     public function getRoles()
     {
@@ -252,7 +259,7 @@ class User implements UserInterface
      */
     public function getPassword()
     {
-        return $this->password;
+        return $this->password_hash;
     }
 
     /**
@@ -275,6 +282,6 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // TODO: Implement eraseCredentials() method.
+
     }
 }
